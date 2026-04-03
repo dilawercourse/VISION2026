@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedFind — Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #1a6fd4;
+  --navy-d:    #1558b0;
+  --navy-m:    #2278e8;
+  --blue-l:    #1a6fd4;
+  --blue-b:    #2278e8;
+  --cyan:      #1a6fd4;
+  --cyan-l:    #dce8f7;
+  --cream:     #f0f6ff;
+  --white:     #ffffff;
+  --mid:       #6B7280;
+  --light:     #e2eaf4;
+  --success:   #198754;
+  --danger:    #dc3545;
+  --font-head: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--font-body); background:var(--cream); color:var(--navy); min-height:100vh; }
+
+  /* ── NAVBAR ── */
+  .navbar { background:linear-gradient(135deg, #071535, #1A3468); backdrop-filter:blur(14px); border-bottom:1px solid rgba(59,130,246,0.15);}
+  .navbar-brand { font-family:var(--font-head); font-size:1.4rem; font-weight:800; color:#fff !important; }
+  .navbar-brand span { color:var(--cyan); }
+  .btn-back { padding:8px 18px; border-radius:8px; border:1.5px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.8); background:transparent; font-size:0.84rem; font-weight:500; text-decoration:none; transition:all 0.2s; display:inline-flex; align-items:center; gap:0px; }
+  .btn-back:hover { background:rgba(255,255,255,0.1); color:#fff; }
+
+  /* ── PAGE LAYOUT ── */
+  .page-wrap {
+    min-height: calc(100vh - 60px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    background: linear-gradient( rgba(11,31,75,0.97));
+    padding: 60px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .left-panel::before { content:''; position:absolute; top:-100px; right:-100px; width:280px; height:280px; border-radius:50%; background:rgba(6,182,212,0.1); }
+  .left-panel::after  { content:''; position:absolute; bottom:-80px; left:-80px;  width:220px; height:220px; border-radius:50%; background:rgba(37,99,235,0.1); }
+  .left-dots { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px); background-size:28px 28px; }
+
+  .left-badge { display:inline-flex; align-items:center; gap:8px; padding:5px 14px; border-radius:999px; background:rgba(6,182,212,0.15); border:1px solid rgba(6,182,212,0.3); color:var(--cyan); font-size:0.75rem; font-weight:500; margin-bottom:22px; position:relative; z-index:1; }
+  .left-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--cyan); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.5)} }
+
+  .left-title { font-family:var(--font-head); font-size:clamp(1.8rem,3vw,2.6rem); font-weight:800; color:#fff; line-height:1.15; letter-spacing:-1px; margin-bottom:14px; position:relative; z-index:1; }
+  .left-title em { font-style:normal; color:var(--cyan); }
+  .left-sub { font-size:0.9rem; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:36px; position:relative; z-index:1; max-width:340px; }
+
+  .perk-item { display:flex; align-items:flex-start; gap:13px; margin-bottom:18px; position:relative; z-index:1; }
+  .perk-icon { width:36px; height:36px; border-radius:10px; background:rgba(6,182,212,0.15); display:flex; align-items:center; justify-content:center; color:var(--cyan); font-size:1rem; flex-shrink:0; }
+  .perk-text h6 { font-family:var(--font-head); font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:3px; }
+  .perk-text p  { font-size:0.78rem; color:rgba(255,255,255,0.45); margin:0; line-height:1.5; }
+
+  .left-already { margin-top:36px; padding-top:28px; border-top:1px solid rgba(255,255,255,0.1); font-size:0.83rem; color:rgba(255,255,255,0.45); position:relative; z-index:1; }
+  .left-already a { color:var(--cyan); font-weight:600; text-decoration:none; }
+  .left-already a:hover { text-decoration:underline; }
+
+  /* ── RIGHT PANEL (FORM) ── */
+  .right-panel { padding:50px 52px; display:flex; flex-direction:column; justify-content:center; background:var(--white); }
+  .form-heading { font-family:var(--font-head); font-size:1.6rem; font-weight:800; color:var(--navy); margin-bottom:4px; }
+  .form-sub { font-size:0.85rem; color:var(--mid); margin-bottom:30px; }
+
+  /* Steps indicator */
+  .steps-nav { display:flex; align-items:center; gap:0; margin-bottom:32px; }
+  .step-pill { display:flex; align-items:center; gap:8px; padding:7px 16px; border-radius:999px; font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.25s; border:none; background:transparent; }
+  .step-pill.active { background:var(--navy); color:#fff; }
+  .step-pill.done   { background:var(--cyan-l); color:#0E7490; }
+  .step-pill.inactive { color:var(--mid); }
+  .step-pill .step-num-badge { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; }
+  .step-pill.active   .step-num-badge { background:rgba(255,255,255,0.25); }
+  .step-pill.done     .step-num-badge { background:rgba(6,182,212,0.3); }
+  .step-pill.inactive .step-num-badge { background:var(--light); }
+  .step-connector { flex:1; height:2px; background:var(--light); border-radius:999px; margin:0 4px; }
+  .step-connector.done { background:var(--cyan); }
+
+  /* Form fields */
+  .field-wrap { margin-bottom:18px; }
+  .field-label { font-size:0.82rem; font-weight:600; color:var(--navy); margin-bottom:6px; display:block; }
+  .field-label span { color:var(--danger); margin-left:2px; }
+  .input-box { position:relative; }
+  .input-box .fi { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--mid); font-size:0.95rem; pointer-events:none; z-index:1; }
+  .input-box .toggle-vis { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--mid); cursor:pointer; font-size:0.95rem; padding:0; }
+  .input-box .toggle-vis:hover { color:var(--navy); }
+  .f-input {
+    width:100%; padding:12px 14px 12px 40px;
+    border:1.5px solid var(--light); border-radius:10px;
+    font-family:var(--font-body); font-size:0.88rem;
+    background:var(--cream); color:var(--navy);
+    outline:none; transition:all 0.2s;
+  }
+  .f-input:focus { border-color:var(--blue-b); background:#fff; box-shadow:0 0 0 3px rgba(59,130,246,0.1); }
+  .f-input.err  { border-color:var(--danger); background:#FFF5F5; }
+  .f-input.err:focus { box-shadow:0 0 0 3px rgba(239,68,68,0.1); }
+  .f-input.ok   { border-color:var(--success); }
+  .f-input.ok:focus { box-shadow:0 0 0 3px rgba(34,197,94,0.1); }
+  .f-input.no-icon { padding-left:14px; }
+
+  .ferr { font-size:0.74rem; color:var(--danger); margin-top:5px; display:none; }
+  .ferr.show { display:block; }
+  .fhint { font-size:0.74rem; color:var(--mid); margin-top:5px; }
+
+  /* Password strength */
+  .strength-wrap { margin-top:8px; }
+  .strength-bars { display:flex; gap:4px; margin-bottom:5px; }
+  .sbar { height:3px; border-radius:999px; flex:1; background:var(--light); transition:background 0.3s; }
+  .strength-lbl { font-size:0.72rem; }
+
+  /* Terms */
+  .terms-wrap { display:flex; align-items:flex-start; gap:10px; font-size:0.82rem; color:var(--mid); margin-bottom:22px; }
+  .terms-wrap input[type=checkbox] { accent-color:var(--navy); width:16px; height:16px; cursor:pointer; margin-top:2px; flex-shrink:0; }
+  .terms-wrap a { color:var(--blue-l); text-decoration:none; font-weight:500; }
+  .terms-wrap a:hover { text-decoration:underline; }
+  .ferr-terms { font-size:0.74rem; color:var(--danger); margin-top:-14px; margin-bottom:14px; display:none; }
+  .ferr-terms.show { display:block; }
+
+  /* Submit btn */
+  .btn-register {
+    width:100%; padding:13px;
+    background:var(--navy); color:#fff;
+    border:none; border-radius:10px;
+    font-family:var(--font-body); font-size:0.95rem; font-weight:600;
+    cursor:pointer; transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .btn-register:hover { background:var(--navy-m); transform:translateY(-1px); }
+  .btn-register:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
+  .btn-next {
+    width:100%; padding:13px;
+    background:var(--navy); color:#fff;
+    border:none; border-radius:10px;
+    font-family:var(--font-body); font-size:0.95rem; font-weight:600;
+    cursor:pointer; transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .btn-next:hover { background:var(--navy-m); transform:translateY(-1px); }
+  .btn-prev {
+    width:100%; padding:13px;
+    background:transparent; color:var(--navy);
+    border:2px solid var(--light); border-radius:10px;
+    font-family:var(--font-body); font-size:0.95rem; font-weight:500;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .btn-prev:hover { border-color:var(--navy); }
+
+  /* Alert */
+  .reg-alert { padding:12px 16px; border-radius:10px; font-size:0.83rem; margin-bottom:18px; display:none; align-items:center; gap:10px; }
+  .reg-alert.show { display:flex; }
+  .reg-alert.success { background:#F0FDF4; color:#166534; border:1px solid #BBF7D0; }
+  .reg-alert.error   { background:#FFF5F5; color:#991B1B; border:1px solid #FECACA; }
+
+  /* Spinner */
+  .spinner { width:18px; height:18px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* Success screen */
+  .success-screen { display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px 0; }
+  .success-screen.show { display:flex; }
+  .success-icon { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--cyan-l), #A5F3FC); display:flex; align-items:center; justify-content:center; font-size:2.2rem; margin-bottom:20px; animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes popIn { 0%{transform:scale(0)} 100%{transform:scale(1)} }
+  .success-screen h3 { font-family:var(--font-head); font-size:1.6rem; font-weight:800; color:var(--navy); margin-bottom:8px; }
+  .success-screen p  { font-size:0.9rem; color:var(--mid); margin-bottom:28px; max-width:300px; }
+  .btn-go-login { padding:13px 36px; border-radius:10px; background:var(--navy); color:#fff; font-family:var(--font-body); font-size:0.95rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all 0.2s; border:none; cursor:pointer; }
+  .btn-go-login:hover { background:var(--navy-m); color:#fff; }
+
+  /* Responsive */
+  @media (max-width:991px) {
+    .page-wrap { grid-template-columns:1fr; }
+    .left-panel { padding:40px 28px; min-height:auto; }
+    .right-panel { padding:36px 24px; }
+  }
+  @media (max-width:575px) {
+    .right-panel { padding:28px 16px; }
+    .step-pill span.d-sm-none { display:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"> <img src="images\medfind4-removebg-preview.png" alt="" style="height: 60px; width: 60px;">Med<span>Find</span></a>
+    <a href="index.html" class="btn-back"><i class="bi bi-arrow-left"></i> Back to Home</a>
+  </div>
+</nav>
+
+<!-- PAGE WRAP -->
+<div class="page-wrap" style="margin-top:60px;">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="left-dots"></div>
+    <div class="left-badge" style="color: white;"><span class="left-badge-dot"></span> Free — No credit card needed</div>
+    <h2 class="left-title">Join <em>Med<span style="color: white;">Find</span></em><br>Today</h2>
+    <p class="left-sub">Create your free account and start finding medicines near you in seconds.</p>
+
+    <div class="perk-item">
+      <div class="perk-icon"><i class="bi bi-search"></i></div>
+      <div class="perk-text">
+        <h6>Search Any Medicine</h6>
+        <p>Find by name, formula, or brand instantly.</p>
+      </div>
+    </div>
+    <div class="perk-item">
+      <div class="perk-icon"><i class="bi bi-geo-alt"></i></div>
+      <div class="perk-text">
+        <h6>Nearest Store First</h6>
+        <p>Location-based results so you save time.</p>
+      </div>
+    </div>
+    <div class="perk-item">
+      <div class="perk-icon"><i class="bi bi-bag-check"></i></div>
+      <div class="perk-text">
+        <h6>Order & Track</h6>
+        <p>Request pickup and track status live.</p>
+      </div>
+    </div>
+    <div class="perk-item">
+      <div class="perk-icon"><i class="bi bi-shield-check"></i></div>
+      <div class="perk-text">
+        <h6>Safe & Private</h6>
+        <p>Your data is secure and never shared.</p>
+      </div>
+    </div>
+
+    <div class="left-already">
+      Already have an account?
+      <a href="index.html" id="goLogin">Login here →</a>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- SUCCESS SCREEN (hidden initially) -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <h3>Account Created!</h3>
+      <p>Welcome to MediMatch! Your account is ready. Login to start searching medicines.</p>
+      <button class="btn-go-login" id="goLoginAfterReg" ><i class="bi bi-box-arrow-in-right"></i> Go to Login</button>
+    </div>
+
+    <!-- FORM WRAPPER -->
+    <div id="formWrapper">
+      <h2 class="form-heading">Create Account</h2>
+      <p class="form-sub">Fill in your details — takes less than 2 minutes</p>
+
+      <!-- Steps indicator -->
+      <div class="steps-nav">
+        <button class="step-pill active" id="pill1" type="button">
+          <span class="step-num-badge">1</span>
+          <span>Personal Info</span>
+        </button>
+        <div class="step-connector" id="conn1"></div>
+        <button class="step-pill inactive" id="pill2" type="button">
+          <span class="step-num-badge">2</span>
+          <span>Account Setup</span>
+        </button>
+        <div class="step-connector" id="conn2"></div>
+        <button class="step-pill inactive" id="pill3" type="button">
+          <span class="step-num-badge">3</span>
+          <span>Location</span>
+        </button>
+      </div>
+
+      <!-- Alert -->
+      <div class="reg-alert error" id="regAlert">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span id="regAlertMsg">Please fix the errors above.</span>
+      </div>
+
+      <form id="regForm" novalidate autocomplete="off">
+
+        <!-- ═══════ STEP 1: Personal Info ═══════ -->
+        <div id="step1">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div class="field-wrap">
+                <label class="field-label">First Name <span>*</span></label>
+                <div class="input-box">
+                  <i class="bi bi-person fi"></i>
+                  <input type="text" class="f-input" id="firstName" placeholder="Ahmed">
+                </div>
+                <div class="ferr" id="firstNameErr">Please enter your first name.</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field-wrap">
+                <label class="field-label">Last Name <span>*</span></label>
+                <div class="input-box">
+                  <i class="bi bi-person fi"></i>
+                  <input type="text" class="f-input" id="lastName" placeholder="Ali">
+                </div>
+                <div class="ferr" id="lastNameErr">Please enter your last name.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Phone Number <span>*</span></label>
+            <div class="input-box">
+              <i class="bi bi-telephone fi"></i>
+              <input type="tel" class="f-input" id="phone" placeholder="03xx-xxxxxxx" maxlength="12">
+            </div>
+            <div class="ferr" id="phoneErr">Enter a valid Pakistani number (e.g. 03001234567).</div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Gender</label>
+            <div class="input-box">
+              <i class="bi bi-gender-ambiguous fi"></i>
+              <select class="f-input" id="gender">
+                <option value="">Select gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="btn-next" id="nextBtn1">
+            Continue <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- ═══════ STEP 2: Account Setup ═══════ -->
+        <div id="step2" style="display:none;">
+          <div class="field-wrap">
+            <label class="field-label">Email Address <span>*</span></label>
+            <div class="input-box">
+              <i class="bi bi-envelope fi"></i>
+              <input type="email" class="f-input" id="regEmail" placeholder="yourname@email.com">
+            </div>
+            <div class="ferr" id="regEmailErr">Please enter a valid email address.</div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Password <span>*</span></label>
+            <div class="input-box">
+              <i class="bi bi-lock fi"></i>
+              <input type="password" class="f-input" id="regPass" placeholder="Create a strong password">
+              <button type="button" class="toggle-vis" id="toggleRegPass"><i class="bi bi-eye" id="toggleRegPassIcon"></i></button>
+            </div>
+            <div class="ferr" id="regPassErr">Password must be at least 8 characters.</div>
+            <div class="strength-wrap" id="strengthWrap">
+              <div class="strength-bars">
+                <div class="sbar" id="sb1"></div>
+                <div class="sbar" id="sb2"></div>
+                <div class="sbar" id="sb3"></div>
+                <div class="sbar" id="sb4"></div>
+              </div>
+              <span class="strength-lbl" id="strengthLbl" style="color:var(--mid);">Enter password</span>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Confirm Password <span>*</span></label>
+            <div class="input-box">
+              <i class="bi bi-lock-fill fi"></i>
+              <input type="password" class="f-input" id="regPassConfirm" placeholder="Re-enter password">
+              <button type="button" class="toggle-vis" id="toggleConfPass"><i class="bi bi-eye" id="toggleConfIcon"></i></button>
+            </div>
+            <div class="ferr" id="regPassConfirmErr">Passwords do not match.</div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-6">
+              <button type="button" class="btn-prev" id="prevBtn2"><i class="bi bi-arrow-left"></i> Back</button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn-next" id="nextBtn2">Continue <i class="bi bi-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ STEP 3: Location + Submit ═══════ -->
+        <div id="step3" style="display:none;">
+          <div class="field-wrap">
+            <label class="field-label">City <span>*</span></label>
+            <div class="input-box">
+              <i class="bi bi-building fi"></i>
+              <select class="f-input" id="city">
+                <option value="">Select your city</option>
+                <option>Karachi</option>
+                <option>Lahore</option>
+                <option>Islamabad</option>
+                <option>Rawalpindi</option>
+                <option>Faisalabad</option>
+                <option>Multan</option>
+                <option>Peshawar</option>
+                <option>Quetta</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="ferr" id="cityErr">Please select your city.</div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Area / Locality</label>
+            <div class="input-box">
+              <i class="bi bi-geo-alt fi"></i>
+              <input type="text" class="f-input" id="area" placeholder="e.g. Clifton Block 5, DHA Phase 6">
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Full Address</label>
+            <div class="input-box">
+              <i class="bi bi-house fi" style="top:16px;transform:none;"></i>
+              <textarea class="f-input" id="address" rows="2" placeholder="Street, Block, Near landmark..." style="padding-top:12px;resize:none;"></textarea>
+            </div>
+          </div>
+
+          <div class="terms-wrap">
+            <input type="checkbox" id="termsCheck">
+            <label for="termsCheck">
+              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of MediMatch.
+            </label>
+          </div>
+          <div class="ferr-terms" id="termsErr">You must agree to the terms to continue.</div>
+
+          <div class="row g-3">
+            <div class="col-5">
+              <button type="button" class="btn-prev" id="prevBtn3"><i class="bi bi-arrow-left"></i> Back</button>
+            </div>
+            <div class="col-7">
+              <button type="submit" class="btn-register" id="regSubmitBtn">
+                <span id="regBtnText"><i class="bi bi-person-check"></i> Create Account</span>
+                <div class="spinner d-none" id="regSpinner"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div><!-- /formWrapper -->
+
+  </div><!-- /right-panel -->
+</div><!-- /page-wrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ═══════════════════════════════════════
+     HELPERS
+  ═══════════════════════════════════════ */
+  const $ = id => document.getElementById(id);
+
+  function isEmail(v)  { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+  function isPakPhone(v){ return /^(03\d{2}[-\s]?\d{7})$/.test(v.trim()); }
+
+  function setErr(input, errEl, msg) {
+    input.classList.add('err'); input.classList.remove('ok');
+    if (msg) errEl.textContent = msg;
+    errEl.classList.add('show');
+  }
+  function setOk(input, errEl) {
+    input.classList.remove('err'); input.classList.add('ok');
+    errEl.classList.remove('show');
+  }
+  function clrField(input, errEl) {
+    input.classList.remove('err','ok');
+    errEl.classList.remove('show');
+  }
+
+  function hideAlert() { $('regAlert').classList.remove('show'); }
+  function showAlert(msg) { $('regAlertMsg').textContent = msg; $('regAlert').classList.add('show'); }
+
+  /* ═══════════════════════════════════════
+     STEP NAVIGATION
+  ═══════════════════════════════════════ */
+  let currentStep = 1;
+
+  function goToStep(n) {
+    [1,2,3].forEach(i => {
+      $('step'+i).style.display = i === n ? 'block' : 'none';
+    });
+    updatePills(n);
+    currentStep = n;
+    hideAlert();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function updatePills(active) {
+    [1,2,3].forEach(i => {
+      const pill = $('pill'+i);
+      pill.className = 'step-pill ' + (i < active ? 'done' : i === active ? 'active' : 'inactive');
+      if (i < active) {
+        pill.querySelector('.step-num-badge').innerHTML = '<i class="bi bi-check" style="font-size:0.7rem;"></i>';
+      } else {
+        pill.querySelector('.step-num-badge').textContent = i;
+      }
+    });
+    if ($('conn1')) $('conn1').className = 'step-connector' + (active > 1 ? ' done' : '');
+    if ($('conn2')) $('conn2').className = 'step-connector' + (active > 2 ? ' done' : '');
+  }
+
+  /* ═══════════════════════════════════════
+     STEP 1 VALIDATION
+  ═══════════════════════════════════════ */
+  function validateStep1() {
+    let ok = true;
+    const fn = $('firstName'), ln = $('lastName'), ph = $('phone');
+
+    if (!fn.value.trim() || fn.value.trim().length < 2) { setErr(fn, $('firstNameErr')); ok=false; } else setOk(fn, $('firstNameErr'));
+    if (!ln.value.trim() || ln.value.trim().length < 2) { setErr(ln, $('lastNameErr'));  ok=false; } else setOk(ln, $('lastNameErr'));
+    if (!isPakPhone(ph.value))                          { setErr(ph, $('phoneErr'));     ok=false; } else setOk(ph, $('phoneErr'));
+
+    return ok;
+  }
+
+  // Real-time
+  $('firstName').addEventListener('input', () => {
+    const v = $('firstName').value.trim();
+    v.length >= 2 ? setOk($('firstName'), $('firstNameErr')) : clrField($('firstName'), $('firstNameErr'));
+  });
+  $('lastName').addEventListener('input', () => {
+    const v = $('lastName').value.trim();
+    v.length >= 2 ? setOk($('lastName'), $('lastNameErr')) : clrField($('lastName'), $('lastNameErr'));
+  });
+  $('phone').addEventListener('input', () => {
+    const v = $('phone').value;
+    if (v) { isPakPhone(v) ? setOk($('phone'), $('phoneErr')) : setErr($('phone'), $('phoneErr')); }
+    else clrField($('phone'), $('phoneErr'));
+  });
+
+  $('nextBtn1').addEventListener('click', () => {
+    if (validateStep1()) goToStep(2);
+    else showAlert('Please fill all required fields correctly.');
+  });
+
+  /* ═══════════════════════════════════════
+     STEP 2 VALIDATION
+  ═══════════════════════════════════════ */
+
+  // Password strength
+  $('regPass').addEventListener('input', () => {
+    const v = $('regPass').value;
+    if (!v) { clrField($('regPass'), $('regPassErr')); return; }
+    updateStrength(v);
+    v.length >= 8 ? setOk($('regPass'), $('regPassErr')) : setErr($('regPass'), $('regPassErr'));
+    if ($('regPassConfirm').value) checkConfirm();
+  });
+
+  function updateStrength(v) {
+    let score = 0;
+    if (v.length >= 8)       score++;
+    if (/[A-Z]/.test(v))     score++;
+    if (/[0-9]/.test(v))     score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+
+    const colors = ['#EF4444','#F59E0B','#3B82F6','#22C55E'];
+    const labels = ['Weak','Fair','Good','Strong'];
+    const bars   = [$('sb1'),$('sb2'),$('sb3'),$('sb4')];
+
+    bars.forEach((b,i) => { b.style.background = i < score ? colors[score-1] : 'var(--light)'; });
+    $('strengthLbl').textContent = labels[score-1] || 'Too short';
+    $('strengthLbl').style.color = colors[score-1] || 'var(--mid)';
+  }
+
+  $('regEmail').addEventListener('input', () => {
+    const v = $('regEmail').value;
+    if (v) { isEmail(v) ? setOk($('regEmail'), $('regEmailErr')) : setErr($('regEmail'), $('regEmailErr')); }
+    else clrField($('regEmail'), $('regEmailErr'));
+  });
+
+  function checkConfirm() {
+    const p = $('regPass').value, c = $('regPassConfirm').value;
+    if (c) { p === c ? setOk($('regPassConfirm'), $('regPassConfirmErr')) : setErr($('regPassConfirm'), $('regPassConfirmErr'), 'Passwords do not match.'); }
+  }
+  $('regPassConfirm').addEventListener('input', checkConfirm);
+
+  // Toggle password visibility
+  $('toggleRegPass').addEventListener('click', () => {
+    const inp = $('regPass');
+    const icon = $('toggleRegPassIcon');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    icon.className = inp.type === 'text' ? 'bi bi-eye-slash' : 'bi bi-eye';
+  });
+  $('toggleConfPass').addEventListener('click', () => {
+    const inp = $('regPassConfirm');
+    const icon = $('toggleConfIcon');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    icon.className = inp.type === 'text' ? 'bi bi-eye-slash' : 'bi bi-eye';
+  });
+
+  function validateStep2() {
+    let ok = true;
+    const em = $('regEmail'), pw = $('regPass'), pc = $('regPassConfirm');
+    if (!isEmail(em.value))        { setErr(em, $('regEmailErr'));       ok=false; } else setOk(em, $('regEmailErr'));
+    if (pw.value.length < 8)       { setErr(pw, $('regPassErr'));        ok=false; } else setOk(pw, $('regPassErr'));
+    if (pw.value !== pc.value || !pc.value) { setErr(pc, $('regPassConfirmErr'), 'Passwords do not match.'); ok=false; } else setOk(pc, $('regPassConfirmErr'));
+    return ok;
+  }
+
+  $('nextBtn2').addEventListener('click', () => {
+    if (validateStep2()) goToStep(3);
+    else showAlert('Please fix the errors to continue.');
+  });
+  $('prevBtn2').addEventListener('click', () => { hideAlert(); goToStep(1); });
+
+  /* ═══════════════════════════════════════
+     STEP 3 VALIDATION + SUBMIT
+  ═══════════════════════════════════════ */
+  $('city').addEventListener('change', () => {
+    $('city').value ? setOk($('city'), $('cityErr')) : clrField($('city'), $('cityErr'));
+  });
+
+  $('prevBtn3').addEventListener('click', () => { hideAlert(); goToStep(2); });
+
+  $('regForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    hideAlert();
+
+    let ok = true;
+    if (!$('city').value) { setErr($('city'), $('cityErr'), 'Please select your city.'); ok=false; } else setOk($('city'), $('cityErr'));
+    if (!$('termsCheck').checked) { $('termsErr').classList.add('show'); ok=false; } else $('termsErr').classList.remove('show');
+    if (!ok) { showAlert('Please agree to the terms and select your city.'); return; }
+
+    // Loading
+    const btn = $('regSubmitBtn');
+    btn.disabled = true;
+    $('regBtnText').classList.add('d-none');
+    $('regSpinner').classList.remove('d-none');
+
+    // Simulate API call (replace with PHP AJAX later)
+    await new Promise(r => setTimeout(r, 1800));
+
+    // Save user data to sessionStorage
+    const userData = {
+      name:  $('firstName').value.trim() + ' ' + $('lastName').value.trim(),
+      email: $('regEmail').value.trim(),
+      phone: $('phone').value.trim(),
+      city:  $('city').value,
+      role:  'customer'
+    };
+    sessionStorage.setItem('mm_user', JSON.stringify(userData));
+
+    // Show success
+    $('formWrapper').style.display = 'none';
+    $('successScreen').classList.add('show');
+  });
+
+  // After success, go to login modal on index page
+  $('goLoginAfterReg').addEventListener('click', () => {
+    window.location.href = 'index.html#openLogin';
+  });
+
+  // "Login here" link on left panel
+  $('goLogin').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'index.html#openLogin';
+  });
+
+  /* ── Auto-open login modal if redirected back ── */
+  // (Handled in index.html via hash check)
+</script>
+</body>
+</html>

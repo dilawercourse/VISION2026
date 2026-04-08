@@ -16,7 +16,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <img src="images\medfind4-removebg-preview.png" alt="" style="height: 60px; width: 60px;">
+    <img src="images/medfind4-removebg-preview.png" alt="" style="height: 60px; width: 60px;">
     <a class="navbar-brand" href="index.html">Med<span>Find</span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false">
       <span class="navbar-toggler-icon"></span>
@@ -57,7 +57,7 @@
         <h1 class="hero-title">Find Your<br><em>Medicine</em><br>Nearby, Fast</h1>
         <p class="hero-sub">Search any medicine by name, formula, or brand — instantly see which stores near you have it in stock with real-time prices.</p>
         <div class="d-flex flex-wrap gap-3">
-          <a href="search.html" class="btn-hero-primary"><i class="bi bi-search"></i> Search Medicine</a>
+          <a href="product.html" class="btn-hero-primary"><i class="bi bi-search"></i> Search Medicine</a>
           <a href="#how" class="btn-hero-ghost"><i class="bi bi-play-circle"></i> How it works</a>
         </div>
         <div class="hero-stats">
@@ -80,7 +80,7 @@
             <i class="bi bi-geo-alt"></i>
             <input type="text" placeholder="Your area e.g. Clifton, Gulshan...">
           </div>
-          <button class="btn-search"><i class="bi bi-search me-2"></i>Search Nearby Stores</button>
+          <a href="search.html"><button class="btn-search"><i class="bi bi-search me-2"></i>Search Nearby Stores</button></a>
           <div class="search-tags">
             <button class="stag">Panadol</button>
             <button class="stag">Brufen</button>
@@ -191,7 +191,7 @@
 <!-- FOR STORES -->
 <section class="section-py stores-section" id="stores">
   <div class="container">
-    <div class="row align-items-center g-5">
+    <div class="row align-items-center g-4" style="margin-left:0; margin-right:0">
       <div class="col-lg-6 fade-up">
         <span class="section-label" style="color:var(--navy);">For Medical Stores</span>
         <h2 class="section-title" style="color:var(--navy-d);">Grow Your Store's Sales</h2>
@@ -511,7 +511,7 @@
       loginSpinner.classList.add('d-none');
       /* Redirect after 1.2s */
       setTimeout(() => {
-        window.location.href = 'customer-dashboard.html';
+        window.location.href = 'customer_portal.html';
       }, 1200);
     } else {
       /* Wrong credentials */
